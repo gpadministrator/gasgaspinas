@@ -6,15 +6,25 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongodb = require('mongodb').MongoClient;
 var format = require('util').format;
-
+//Schema
+require('./schema/schema.js');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var feeds = require('./routes/feeds');
-
+var mongoose = require('mongoose');
 var app = express();
 
-//Schema
-require('./schema/schema.js');
+
+var connect = function() {
+    var options = {server: {socketOptions: {keepAlive:1}}};
+    mongoose.connect('mongodb://nodejitsu:86d515135d8fc82ab63862f544b59e65@troup.mongohq.com:10084/nodejitsudb3087115902',options);
+};
+
+connect();
+mongoose.connection.on('error', console.log);
+mongoose.connection.on('disconnected', connect);
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,10 +37,10 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/users', users);
 app.use('/', routes);
+app.use('/users', users);
+app.use('/feeds', feeds);
 
-app.use('/feeds/', feeds);
 var port = process.env.PORT || 3000;
 
 // catch 404 and forward to error handler

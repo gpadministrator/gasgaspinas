@@ -1,3 +1,4 @@
 
 
 require('./feeds')();
+require('./users')();
