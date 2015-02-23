@@ -20,12 +20,6 @@ router.get('/generate', function(req, res) {
     res.send(info);
 });
 
-
-var isUserExist = function(req,res,next){
-	console.log("cb1");
-	next();
-};
-
 var addUser = function(req,res,next) {
 
 	console.log(JSON.stringify(req.body));
