@@ -14,7 +14,7 @@ var isUserExist = function(req,res,next) {
     var user = req.body.auth;
     user.password = toMD5(user.password);
     console.log(JSON.stringify(user));
-    if(user.type) {
+    if(!user.type) {
 		USERS.find({"auth.username": user.username, "auth.password": user.password}, function(err, doc){
 			req.err = err;
 			req.entry = doc;
@@ -31,7 +31,7 @@ var isUserExist = function(req,res,next) {
 			req.err = err;
 			req.entry = doc;
 
-			if(req.body.info != undefined) {
+			if(req.body.info != undefined) {	
 				req.addUser = true;
             }
             else {
