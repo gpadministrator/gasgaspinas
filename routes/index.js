@@ -32,7 +32,7 @@ var isUserExist = function(req,res,next) {
 			req.err = err;
 			req.entry = doc;
 			console.log("social login");
-			if(req.body.info != undefined && isEmptyObject(doc)) {	
+			if(req.body.info && isEmptyObject(doc)<=0) {	
 				req.addUser = true;
             }
             else {
@@ -45,35 +45,38 @@ var isUserExist = function(req,res,next) {
 };
 
 function isEmptyObject(obj) {
-  return !Object.keys(obj).length;
+  console.log("length="+Object.keys(obj).length);
+  console.log(JSON.stringify(obj));
+  return Object.keys(obj).length;
 }
 
 var addUser = function(req,res,next) {
 
 
-    if(!req.addUser) {
+    if(req.addUser) {
+    	console.log("addUser");
+		console.log(JSON.stringify(req.body));
+		var reqEntry = req.body;
+		reqEntry._id = new mongoose.Types.ObjectId;
+		reqEntry.date_modified = dateToUnixEpoch(new Date(reqEntry._id.getTimestamp()));
+		if(!reqEntry.auth.type) {
+			reqEntry.auth.password = toMD5(reqEntry.auth.password);		
+		}
+
+		reqEntry.vehicles = [];
+
+
+		var newEntry = new USERS(reqEntry);
+
+		
+		newEntry.save(function(err, entry, numbersAffected){
+			req.err = err;
+			req.entry = entry;
+			next();
+		});
      	next();
     }
-    console.log("addUser");
-	console.log(JSON.stringify(req.body));
-	var reqEntry = req.body;
-	reqEntry._id = new mongoose.Types.ObjectId;
-	reqEntry.date_modified = dateToUnixEpoch(new Date(reqEntry._id.getTimestamp()));
-	if(!reqEntry.auth.type) {
-		reqEntry.auth.password = toMD5(reqEntry.auth.password);		
-	}
 
-	reqEntry.vehicles = [];
-
-
-	var newEntry = new USERS(reqEntry);
-
-	
-	newEntry.save(function(err, entry, numbersAffected){
-		req.err = err;
-		req.entry = entry;
-		next();
-	});
 };
 
 var sendResponse = function(req,res,next) {
