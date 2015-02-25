@@ -32,7 +32,7 @@ var isUserExist = function(req,res,next) {
 			req.err = err;
 			req.entry = doc;
 			console.log("social login");
-			if(req.body.info != undefined && err) {	
+			if(req.body.info != undefined && isEmpty(doc)) {	
 				req.addUser = true;
             }
             else {
@@ -43,6 +43,10 @@ var isUserExist = function(req,res,next) {
 		});	
 	}
 };
+
+function isEmptyObject(obj) {
+  return !Object.keys(obj).length;
+}
 
 var addUser = function(req,res,next) {
 
