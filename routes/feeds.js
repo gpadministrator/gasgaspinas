@@ -25,9 +25,9 @@ router.post('/', function(req,res) {
 	console.log(JSON.stringify(newEntry));
 	newEntry.save(function(err, entry, numbersAffected){
 		if(err) 
-			res.send({msg: "NG", data: err});
+			res.send({msg: false, data: err});
 		else {
-			res.send({msg: "OK", data: entry, rowsAffected: numbersAffected});
+			res.send({msg: true, data: entry, rowsAffected: numbersAffected});
 		}
 	});
 });
@@ -38,10 +38,10 @@ router.get('/:id', function(req,res){
 
   	function(err, doc){
   		if(err) {
-  			res.send({msg: "NG", data: err});
+  			res.send({msg: false, data: err});
   		}
   		else {
-  			res.send({msg: "OK", data: doc});
+  			res.send({msg: true, data: doc});
   		}
   	}
   )
@@ -79,10 +79,10 @@ router.get('/type/:type', function(req,res){
   query.exec(
   	function(err, doc){
   		if(err) {
-  			res.send({msg: "NG", data: err});
+  			res.send({msg: false, data: err});
   		}
   		else {
-  			res.send({msg: "OK", data: doc});
+  			res.send({msg: true, data: doc});
   		}	
   	}
   )
@@ -94,10 +94,10 @@ router.put('/:id', function(req, res){
 	FEEDS.update({_id: new mongoose.Types.ObjectId(req.params.id)}, {$set: req.body},
 		function(err, numbersAffected, raw){
 			if(err) {
-				res.send({msg: "NG", data: err});
+				res.send({msg: false, data: err});
 			}
 			else {
-				res.send({msg: "OK", data: raw, rowsAffected: numbersAffected});
+				res.send({msg: true, data: raw, rowsAffected: numbersAffected});
 			}
 		});
 });
@@ -106,10 +106,10 @@ router.delete('/:id', function(req, res) {
 	FEEDS.remove({_id: new mongoose.Types.ObjectId(req.params.id)}, 
 		function(err) {
 			if(err) {
-				res.send({msg: "NG", data: err});
+				res.send({msg: false, data: err});
 			}
 			else {
-				res.send({msg: "OK", data: null});
+				res.send({msg: true, data: null});
 			}
 		}
 	);
