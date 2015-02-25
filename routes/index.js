@@ -32,7 +32,7 @@ var isUserExist = function(req,res,next) {
 			req.err = err;
 			req.entry = doc;
 			console.log("social login");
-			if(req.body.info != undefined && isEmpty(doc)) {	
+			if(req.body.info != undefined && isEmptyObject(doc)) {	
 				req.addUser = true;
             }
             else {
@@ -59,7 +59,10 @@ var addUser = function(req,res,next) {
 	var reqEntry = req.body;
 	reqEntry._id = new mongoose.Types.ObjectId;
 	reqEntry.date_modified = dateToUnixEpoch(new Date(reqEntry._id.getTimestamp()));
-	reqEntry.auth.password = toMD5(reqEntry.auth.password);
+	if(!reqEntry.auth.type) {
+		reqEntry.auth.password = toMD5(reqEntry.auth.password);		
+	}
+
 	reqEntry.vehicles = [];
 
 
