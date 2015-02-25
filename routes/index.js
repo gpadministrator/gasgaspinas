@@ -76,6 +76,14 @@ var addUser = function(req,res,next) {
 		});
      	next();
     }
+    else {
+    	if(req.err) {
+    		res.send({msg: false, data: req.err});
+    	}
+    	else {
+    		res.send({msg: true, data: req.entry});
+    	}
+    }
 
 };
 
