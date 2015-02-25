@@ -32,7 +32,7 @@ var isUserExist = function(req,res,next) {
 			req.err = err;
 			req.entry = doc;
 			console.log("social login");
-			if(req.body.info != undefined) {	
+			if(req.body.info != undefined && err) {	
 				req.addUser = true;
             }
             else {
