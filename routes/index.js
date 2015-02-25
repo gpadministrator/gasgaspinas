@@ -12,13 +12,14 @@ router.get('/', function(req, res) {
 
 var isUserExist = function(req,res,next) {
     var user = req.body.auth;
-    user.password = toMD5(user.password);
     console.log(JSON.stringify(user));
     if(!user.type) {
+    	user.password = toMD5(user.password);
 		USERS.find({"auth.username": user.username, "auth.password": user.password}, function(err, doc){
 			req.err = err;
 			req.entry = doc;
 			req.addUser = false;
+
 			next();
 		});
 	}
@@ -30,7 +31,7 @@ var isUserExist = function(req,res,next) {
 			}, function(err, doc){
 			req.err = err;
 			req.entry = doc;
-
+			console.log("social login");
 			if(req.body.info != undefined) {	
 				req.addUser = true;
             }
@@ -49,7 +50,7 @@ var addUser = function(req,res,next) {
     if(!req.addUser) {
      	next();
     }
-
+    console.log("addUser");
 	console.log(JSON.stringify(req.body));
 	var reqEntry = req.body;
 	reqEntry._id = new mongoose.Types.ObjectId;
