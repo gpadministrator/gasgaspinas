@@ -70,6 +70,22 @@ router.delete('/:id', [function(req, res, next) {
 	);
 },sendResponse]);
 
+router.post('/vehicles/:id', [function(req,res,next){ 
+	var vehicleInfo = req.body;
+	vehicleInfo.vehicle_id = mongoose.Types.ObjectId;
+	console.log(JSON.stringify(vehicleInfo));
+
+	USERS.findByIdAndUpdate(
+		new mongoose.Types.ObjectId(req.params.id),
+		{"$push": {"vehicles": vehicleInfo}},
+		function(err, entry) {
+			req.err = err;
+			req.entry = entry;
+			next();
+		}
+	);
+},sendResponse]);
+
 //utils
 toMD5 = function(password) {
 	return crypto.createHash('md5').update(JSON.stringify(password)).digest("hex");
