@@ -5,6 +5,7 @@ module.exports = function() {
 
     var vehiclesSchema = new Schema({
         _id: Schema.Types.ObjectId,
+        user_id: Schema.Types.ObjectId,
         vehicle_name: String, 
         vehicle_type: String, 
         fuel_type: String,
@@ -13,17 +14,8 @@ module.exports = function() {
         date_modified: {type: Date, default: Date.now}
     },{versionKey: false});
 
-	var usersSchema = new Schema({
-		_id: Schema.Types.ObjectId,
-        auth: Schema.Types.Mixed,
-        info: Schema.Types.Mixed,
-        vehicles: [vehiclesSchema],
-        isActive: {type: Boolean, default: true},
-        date_modified: {type: Date, default: Date.now()}
-	}, { versionKey: false});
-
     //usersSchema.path('feed_type').required(true, 'Feed_type cannot be blank');
 
-	mongoose.model('users', usersSchema, 'users');
+	mongoose.model('vehicles', vehiclesSchema, 'vehicles');
 
 };
