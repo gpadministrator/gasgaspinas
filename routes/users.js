@@ -77,7 +77,7 @@ router.post('/vehicles/:id', [function(req,res,next){
 	var vehicleInfo = new VEHICLES(req.body);
 	vehicleInfo._id = new mongoose.Types.ObjectId;
 	vehicleInfo.user_id = new mongoose.Types.ObjectId(req.params.id);
-	vehicleInfo.date_modified = Date.nownew ();
+	vehicleInfo.date_modified = Date.now ();
 
 	vehicleInfo.save(function(err, entry, numbersAffected){
 		req.err = err;

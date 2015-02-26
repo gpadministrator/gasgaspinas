@@ -3,12 +3,31 @@ var router = express.Router();
 var mongoose = require('mongoose');
 
 var USERS = mongoose.model('users');
+var VEHICLES = mongoose.model('vehicles');
+
 /* GET home page. */
 router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
 
+var getUserVehicles = function(req,res,next) {
+	if(req.entry) {
+		console.log("get vehicles");
+		VEHICLES.find({user_id: req.entry._id}, function(err, doc){
+			console.log(JSON.stringify(doc));
 
+			req.err = err;
+			console.log("VEHICLES: "+doc);
+			req.vehicles = doc;
+			console.log(JSON.stringify(req.entry));
+				next();
+		});
+	}
+	else{
+		next();
+	}
+
+}
 
 var isUserExist = function(req,res,next) {
     var user = req.body.auth;
@@ -51,8 +70,8 @@ function isEmptyObject(obj) {
 }
 
 var addUser = function(req,res,next) {
-
-
+	console.log("ADD USER");
+	console.log(JSON.stringify(req.entry));
     if(req.addUser) {
     	console.log("addUser");
 		console.log(JSON.stringify(req.body));
@@ -64,7 +83,6 @@ var addUser = function(req,res,next) {
 		}
 
 		reqEntry.vehicles = [];
-
 
 		var newEntry = new USERS(reqEntry);
 
@@ -81,6 +99,8 @@ var addUser = function(req,res,next) {
     		res.send({msg: false, data: req.err});
     	}
     	else {
+    		console.log("SEND: "+req.vehicles);
+    		req.entry.vehicles = req.vehicles;
     		res.send({msg: true, data: req.entry});
     	}
     }
@@ -88,14 +108,17 @@ var addUser = function(req,res,next) {
 };
 
 var sendResponse = function(req,res,next) {
+	console.log("SENDRESPONSE");
 	if(req.err) 
 		res.send({msg: false, data: req.err});
 	else {
+		console.log("SENDRESPONSE: "+req.vehicles);
+		req.entry.vehicles = req.vehicles;
 		res.send({msg: true, data: req.entry});
 	}
 };
 
-router.post('/auth', [isUserExist, addUser, sendResponse]);
+router.post('/auth', [isUserExist, getUserVehicles, addUser, sendResponse]);
 
 //utils
 toMD5 = function(password) {
