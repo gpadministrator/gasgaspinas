@@ -16,7 +16,15 @@ module.exports = function() {
 	var usersSchema = new Schema({
 		_id: Schema.Types.ObjectId,
         auth: Schema.Types.Mixed,
-        info: Schema.Types.Mixed,
+        info: {
+            city : String,
+            email : String,
+            dp : String,
+            first_name : String,
+            gender : String,
+            last_name : String,
+            DoB : {type: Date, default: Date.now}
+        },
         vehicles: [vehiclesSchema],
         isActive: {type: Boolean, default: true},
         date_modified: {type: Date, default: Date.now()}
