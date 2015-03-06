@@ -15,7 +15,7 @@ module.exports = function() {
         modified_date: {type: Date, default: Date.now}
 	}, { versionKey: false});
 
-    feedsSchema.path('feed_type').required(true, 'Feed_type cannot be blank');
+    feedsSchema.path('feed_type').required(true, 'feed_type cannot be blank');
 
 	mongoose.model('feeds', feedsSchema, 'feeds');
 

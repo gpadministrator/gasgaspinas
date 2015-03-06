@@ -8,7 +8,7 @@ var FEEDS = mongoose.model('feeds');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('feeds', { title: 	HOME });
+  res.render('feeds', { title: 	"Feeds" });
 });
 
 router.get('/generate', function(req, res) {
@@ -23,9 +23,9 @@ router.post('/', function(req,res) {
 	reqEntry._id = new mongoose.Types.ObjectId;
 	var newEntry = new FEEDS(reqEntry);
 	console.log(JSON.stringify(newEntry));
-	newEntry.save(function(err, entry, numbersAffected){
-		if(err) 
-			res.send({msg: false, data: err});
+	newEntry.save(function(error, entry, numbersAffected){
+		if(error) 
+			res.send({msg: false, err: error});
 		else {
 			res.send({msg: true, data: entry, rowsAffected: numbersAffected});
 		}
@@ -36,9 +36,9 @@ router.get('/:id', function(req,res){
 
   FEEDS.find({_id: new mongoose.Types.ObjectId(req.params.id)},
 
-  	function(err, doc){
-  		if(err) {
-  			res.send({msg: false, data: err});
+  	function(error, doc){
+  		if(error) {
+  			res.send({msg: false, err: error});
   		}
   		else {
   			res.send({msg: true, data: doc});
@@ -77,9 +77,9 @@ router.get('/type/:type', function(req,res){
 
   query.limit(limit).skip(skip);
   query.exec(
-  	function(err, doc){
-  		if(err) {
-  			res.send({msg: false, data: err});
+  	function(error, doc){
+  		if(error) {
+  			res.send({msg: false, err: error});
   		}
   		else {
   			res.send({msg: true, data: doc});
@@ -92,9 +92,9 @@ router.get('/type/:type', function(req,res){
 router.put('/:id', function(req, res){
 	console.log(req.body);
 	FEEDS.update({_id: new mongoose.Types.ObjectId(req.params.id)}, {$set: req.body},
-		function(err, numbersAffected, raw){
-			if(err) {
-				res.send({msg: false, data: err});
+		function(error, numbersAffected, raw){
+			if(error) {
+				res.send({msg: false, err: error});
 			}
 			else {
 				res.send({msg: true, data: raw, rowsAffected: numbersAffected});
@@ -104,9 +104,9 @@ router.put('/:id', function(req, res){
 
 router.delete('/:id', function(req, res) {
 	FEEDS.remove({_id: new mongoose.Types.ObjectId(req.params.id)}, 
-		function(err) {
-			if(err) {
-				res.send({msg: false, data: err});
+		function(error) {
+			if(error) {
+				res.send({msg: false, err: error});
 			}
 			else {
 				res.send({msg: true, data: null});

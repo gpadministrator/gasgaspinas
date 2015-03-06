@@ -110,7 +110,7 @@ var addUser = function(req,res,next) {
 var sendResponse = function(req,res,next) {
 	console.log("SENDRESPONSE");
 	if(req.err) 
-		res.send({msg: false, data: req.err});
+		res.send({msg: false, err: req.err});
 	else {
 		console.log("SENDRESPONSE: "+req.vehicles);
 		req.entry.vehicles = req.vehicles;

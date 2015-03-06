@@ -2,4 +2,20 @@ extends layout
 
 block content
   h1= title
-  p Feeds #{title}
+  div(class="panel panel-default col-xs-6 col-md-4")
+    div(class="panel-heading") Add Feed
+    div(class="panel-body")
+      p
+        form
+          div(class="form-group")
+            label(for="exampleInputTitle") Title
+            input(type="text", class="form-control", id="exampleInputTitle", placeholder="Enter email")
+          div(class="form-group")
+            label(for="exampleInputPassword1") Url
+            input(type="text", class="form-control", id="exampleInputPassword1", placeholder="Password")
+          div(class="form-group")
+            label(for="exampleInputFile") File input
+            input(type="file" id="exampleInputFile")
+            p(class="help-block") Example block-level help text here.
+         button(type="submit" class="btn btn-default") Submit
+</form>

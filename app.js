@@ -11,6 +11,7 @@ require('./schema/schema.js');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var feeds = require('./routes/feeds');
+var vehicle_logs = require('./routes/vehicle_logs');
 var mongoose = require('mongoose');
 var app = express();
 
@@ -40,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/feeds', feeds);
+app.use('/vlogs', vehicle_logs);
 
 var port = process.env.PORT || 3000;
 

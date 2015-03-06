@@ -27,6 +27,7 @@ var addUser = function(req,res,next) {
 	var reqEntry = req.body;
 	reqEntry._id = new mongoose.Types.ObjectId;
 	reqEntry.date_modified = dateToUnixEpoch(new Date(reqEntry._id.getTimestamp()));
+	reqEntry.info.
 	reqEntry.auth.password = toMD5(reqEntry.auth.password);
 	reqEntry.vehicles = [];
 
@@ -43,7 +44,7 @@ var addUser = function(req,res,next) {
 
 var sendResponse = function(req,res,next) {
 	if(req.err) 
-		res.send({msg: false, data: req.err});
+		res.send({msg: false, err: req.err});
 	else {
 		res.send({msg: true, data: req.entry});
 	}
