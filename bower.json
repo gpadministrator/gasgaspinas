@@ -1,0 +1,25 @@
+{
+  "name": "gasgas_pinas",
+  "version": "0.0.0",
+  "homepage": "https://github.com/k0ms/gagas_pinas",
+  "authors": [
+    "k0ms <mark.samaniego@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/javascripts",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap": "~0.12.1",
+    "angular-ui": "~0.4.0",
+    "bootstrap-validator": "~0.7.2",
+    "bootstrap": "~3.3.2",
+    "chartjs": "~1.0.1",
+    "ui-bootstrap": "~0.12.1"
+  }
+}
