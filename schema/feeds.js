@@ -12,7 +12,7 @@ module.exports = function() {
         image: String,
         promo_start_date: Date,
         promo_end_date: Date,
-        modified_date: {type: Date, default: Date.now}
+        date_modified: {type: Date, default: Date.now}
 	}, { versionKey: false});
 
     feedsSchema.path('feed_type').required(true, 'feed_type cannot be blank');

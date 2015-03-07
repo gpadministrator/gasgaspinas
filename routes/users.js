@@ -52,6 +52,8 @@ var sendResponse = function(req,res,next) {
 
 router.post('/', [addUser, sendResponse]);
 
+
+
 router.put('/:id', [function(req,res,next){
 	console.log(req.body);
 	USERS.update({_id: new mongoose.Types.ObjectId(req.params.id)}, {$set: req.body},

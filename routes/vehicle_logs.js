@@ -58,7 +58,7 @@ router.get('/:id', function(req,res){
             fuel_savings: "$fuel_savings",
             fuel_consumed: "$fuel_consumed",
             _id: "$_id",
-            modified_date: "$modified_date",
+            date_modified: "$date_modified",
           }
         }
       }

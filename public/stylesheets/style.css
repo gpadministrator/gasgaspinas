@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 70px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -79,4 +79,16 @@ a {
     color: #a2a2a2;
     background-color: #017e66;
   }
+}
+
+.panel-default > .panel-heading {
+  /*color: #333;*/
+  background-color: #f5f5f5;
+  /*border-color: #ddd;*/
+}
+
+.fixed-panel {
+  min-height: 250;
+  max-height: 250;
+  overflow-y: scroll;
 }

@@ -13,7 +13,7 @@ module.exports = function() {
         amount: Number,
         fuel_savings: Number,
         fuel_consumed: Number,
-        modified_date: {type: Date, default: Date.now}
+        date_modified: {type: Date, default: Date.now}
 	}, { versionKey: false});
 
 
