@@ -27,7 +27,6 @@ var addUser = function(req,res,next) {
 	var reqEntry = req.body;
 	reqEntry._id = new mongoose.Types.ObjectId;
 	reqEntry.date_modified = dateToUnixEpoch(new Date(reqEntry._id.getTimestamp()));
-	reqEntry.info.
 	reqEntry.auth.password = toMD5(reqEntry.auth.password);
 	reqEntry.vehicles = [];
 
