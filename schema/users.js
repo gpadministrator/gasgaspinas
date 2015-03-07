@@ -15,12 +15,14 @@ module.exports = function() {
 
 	var usersSchema = new Schema({
 		_id: Schema.Types.ObjectId,
-        auth: [
-            {
+        auth: { 
+            type: {
                 social: String,
                 social_id: String
-            }
-        ],
+            },
+            password: String,
+            username: String,
+        },
         info: {
             city : String,
             email : String,
