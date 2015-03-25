@@ -19,21 +19,5 @@ block content
           h4 {{display.email}}
       div(class='row')
         div(class='col-md-12')
-          div(class="panel panel-default")
-            div(class="panel-heading") Vehicles
-            table(class="table")
-              th Name
-              th Type
-              th Fuel
-              th Brand
-              th Model
-              tr(ng-repeat="vehicle in vehicles")
-                td vehicle.vehicle_name
-                td vehicle.vehicle_type
-                td vehicle.fuel_type
-                td vehicle.brand
-                td vehicle.model
-      div(class='row')
-        div(class='col-md-12')
           div(ui-grid="vehicles",class="vehicleGrid")
         
