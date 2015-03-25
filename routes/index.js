@@ -10,6 +10,11 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/:name', function(req,res){
+	var name = req.params.name;
+	res.render(name);
+});
+
 var getUserVehicles = function(req,res,next) {
 	if(req.entry) {
 		console.log("get vehicles");

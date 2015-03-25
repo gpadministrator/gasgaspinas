@@ -1,5 +1,39 @@
 extends layout
 
 block content
-  h1= title
-  p Hi #{title}
+  br
+  div(class="row", ng-controller='UsersCtrl')
+    div(class="col-md-4 userlist")
+      div(class="row useritem", ng-repeat="item in data", ng-click="showUsers(item)")
+        div(class="col-md-3")
+          img(width="70", height="70", class="img-circle", src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xaf1/v/t1.0-1/c49.49.615.615/s160x160/374831_2509387047546_1688093220_n.jpg?oh=f309a5349f1b34c956d169b106712bd4&oe=55AF7CE1&__gda__=1437613434_bbf2013733097b9419c907b7086206b3", alt="profilepic")
+        div(class="col-md-9")
+          h4 {{item.info.first_name + ' ' + item.info.last_name}}
+    div(class="col-md-8 userlist")
+      div(class='row')
+        div(class="col-md-2")
+          a(href="#", class="thumbnail thumbnail-circle" )
+            img(class="img-circle", width="171", height="180", src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xaf1/v/t1.0-1/c49.49.615.615/s160x160/374831_2509387047546_1688093220_n.jpg?oh=f309a5349f1b34c956d169b106712bd4&oe=55AF7CE1&__gda__=1437613434_bbf2013733097b9419c907b7086206b3", alt="profilepic")                         
+        div(class="col-md-10")
+          h3 {{display.name}} {{(display.username)}}
+          h4 {{display.email}}
+      div(class='row')
+        div(class='col-md-12')
+          div(class="panel panel-default")
+            div(class="panel-heading") Vehicles
+            table(class="table")
+              th Name
+              th Type
+              th Fuel
+              th Brand
+              th Model
+              tr(ng-repeat="vehicle in vehicles")
+                td vehicle.vehicle_name
+                td vehicle.vehicle_type
+                td vehicle.fuel_type
+                td vehicle.brand
+                td vehicle.model
+      div(class='row')
+        div(class='col-md-12')
+          div(ui-grid="vehicles",class="vehicleGrid")
+        

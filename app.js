@@ -10,6 +10,7 @@ var format = require('util').format;
 require('./schema/schema.js');
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var apiUsers = require('./routes/apiUsers');
 var feeds = require('./routes/feeds');
 var vehicle_logs = require('./routes/vehicle_logs');
 var mongoose = require('mongoose');
@@ -42,6 +43,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/feeds', feeds);
 app.use('/vlogs', vehicle_logs);
+app.use('/api', apiUsers);
 
 var port = process.env.PORT || 3000;
 

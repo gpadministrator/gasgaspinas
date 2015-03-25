@@ -8,13 +8,6 @@ var crypto = require('crypto');
 var USERS = mongoose.model('users');
 var VEHICLES = mongoose.model('vehicles');
 
-/* GET users listing. */
-router.get('/', function(req, res) {
-  res.render('users', { title: 'respond with a resource' })
-  //res.send('respond with a resource');
-});
-
-
 router.get('/generate', function(req, res) {
 	var info = generateUsers();
 	console.log(JSON.stringify(info));
@@ -50,7 +43,6 @@ var sendResponse = function(req,res,next) {
 };
 
 router.post('/', [addUser, sendResponse]);
-
 
 
 router.put('/:id', [function(req,res,next){
