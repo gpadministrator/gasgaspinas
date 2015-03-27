@@ -22,7 +22,14 @@ var addUser = function(req,res,next) {
 	reqEntry.date_modified = dateToUnixEpoch(new Date(reqEntry._id.getTimestamp()));
 	reqEntry.auth.password = toMD5(reqEntry.auth.password);
 	reqEntry.vehicles = [];
-
+	if(!reqEntry.info.dp or reqEntry.info.dp == "") {
+		if(reqEntry.info.gender == "Male") {
+			reqEntry.info.dp = "https://s3-ap-southeast-1.amazonaws.com/gasgaspinas/unknown-male.jpg";
+		}
+		else(reqEntry.info.gender == "Female") {
+			reqEntry.info.dp = "https://s3-ap-southeast-1.amazonaws.com/gasgaspinas/unknown-female.jpg";
+		}
+	}
 
 	var newEntry = new USERS(reqEntry);
 
