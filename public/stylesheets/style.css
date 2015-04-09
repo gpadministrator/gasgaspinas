@@ -96,6 +96,7 @@ a {
 
 .userlist {
   height: 600px;  /*Set this height to the appropriate size*/
+  margin-bottom: 0px;
   overflow-y: auto; 
 }
 
@@ -113,6 +114,9 @@ a {
   background-color: white;
 }
 
+.itemSelected {
+  background-color: #4EBCA6;
+}
 
 .userlist::-webkit-scrollbar {
     width: 7px;
@@ -132,3 +136,4 @@ a {
     width: inherit;
     height: 150px;
 }
+

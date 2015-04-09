@@ -1,0 +1,42 @@
+
+<div class="modal-header">
+  <h3>{{modalOptions.headerText}}</h3>
+</div>
+<div class="modal-body">
+  <p>{{modalOptions.bodyText}}</p>
+  <p>{{data.vehicle_name}}</p>
+	<form role="form">
+		<div class="form-group">
+			<label for="vehiclename">Vehicle Name :</label>
+    		<input type="text" class="form-control" id="vehiclename" ng-model="data.vehicle_name"> 
+		</div>
+		<div class="form-group">
+			<label for="vehicletype">Vehicle Type:</label>
+    		<input type="text" class="form-control" id="vehicletype" ng-model="data.vehicle_type"> 
+    	</div>
+    	<div class="form-group">
+			<label for="fueltype">Fuel Type:</label>
+    		<input type="text" class="form-control" id="fueltype" ng-model="data.fuel_type">
+    	</div>
+    	<div class="form-group">
+    		<label for="vehiclebrand">Vehicle Brand:</label>
+    		<input type="text" class="form-control" id="vehiclebrand" ng-model="data.brand"> 
+    	</div>
+    	<div class="form-group">
+			<label for="vehiclemodel">Vehicle Model:</label>
+    		<input type="text" class="form-control" id="vehiclemodel" ng-model="data.model">
+    	</div>
+	</form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" 
+          data-ng-click="cancel()">{{modalOptions.closeButtonText}}</button>
+  <button class="btn btn-primary" 
+          data-ng-click="ok();">{{modalOptions.actionButtonText}}</button>
+</div>
+
+<!--vehicle_name": "BigDaddy", 
+        "vehicle_type": "SUV", 
+        "fuel_type": "Unleaded",
+        "brand": "Mitsubishi",
+        "model": "Montero"-->

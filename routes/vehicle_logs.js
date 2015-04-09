@@ -18,24 +18,7 @@ router.get('/generate', function(req, res) {
 });
 */
 
-router.post('/', function(req,res) {
-	console.log(JSON.stringify(req.body));
-	var reqEntry = req.body;
-	reqEntry._id = new mongoose.Types.ObjectId;
-  reqEntry.vehicle_id = mongoose.Types.ObjectId(reqEntry.vehicle_id);
-  reqEntry.user_id = mongoose.Types.ObjectId(reqEntry.user_id);
-  reqEntry.station_id = mongoose.Types.ObjectId(reqEntry.station_id);
-  reqEntry.date_modified = dateToUnixEpoch(new Date(reqEntry._id.getTimestamp()));
-	var newEntry = new VLOGS(reqEntry);
-	console.log(JSON.stringify(newEntry));
-	newEntry.save(function(error, entry, numbersAffected){
-		if(error) 
-			res.send({msg: false, err: error});
-		else {
-			res.send({msg: true, data: entry, rowsAffected: numbersAffected});
-		}
-	});
-});
+
 
 router.get('/:id', function(req,res){
   var options = [

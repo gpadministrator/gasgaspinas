@@ -1,23 +1,29 @@
 extends layout
 
 block content
+
   br
-  div(class="row", ng-controller='UsersCtrl')
-    div(class="col-md-offset-1 col-md-3 userlist")
-      div(class="row useritem", ng-repeat="item in data", ng-click="showUsers(item)")
-        div(class="col-md-3")
-          img(width="70", height="70", class="img-circle", src="{{item.info.dp}}", alt="profilepic")
-        div(class="col-md-9")
-          h4 {{item.info.first_name + ' ' + item.info.last_name}}
-    div(class="col-md-8 userinfo")
-      div(class='row')
-        div(class="col-md-2")
-          a(href="#", class="thumbnail thumbnail-circle" )
-            img(class="img-circle", width="171", height="180", src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xaf1/v/t1.0-1/c49.49.615.615/s160x160/374831_2509387047546_1688093220_n.jpg?oh=f309a5349f1b34c956d169b106712bd4&oe=55AF7CE1&__gda__=1437613434_bbf2013733097b9419c907b7086206b3", alt="profilepic")                         
-        div(class="col-md-10")
-          h3 {{display.name}} {{(display.username)}}
-          h4 {{display.email}}
-      div(class='row')
-        div(class='col-md-12')
-          div(ui-grid="vehicles",class="vehicleGrid")
-        
+  div(ng-controller='UsersCtrl')
+    div(class="row")
+      div(class="col-md-offset-1 col-md-3 userlist")
+        div(class="row useritem",ng-class="{'itemSelected': selectd == {{'\"'+item._id+'\"'}}}", ng-repeat="item in data", ng-click="showUsers(item,loadUserVehicles)")
+          div(class="col-md-3")
+            img(width="70", height="70", class="img-circle", src="{{item.info.dp}}", alt="profilepic")
+          div(class="col-md-9")
+            h4 {{item.info.first_name + ' ' + item.info.last_name}}
+      div(ng-show='userinitial')
+        div(class="col-md-7 userinfo")
+          div(class='row')
+            div(class="col-md-2")
+              a(href="#", class="thumbnail thumbnail-circle" )
+                img(class="img-circle", width="171", height="180", src="{{display.dp}}", alt="profilepic")                         
+            div(class="col-md-10")
+              h3 {{display.name}} {{(display.username)}}
+              h4 {{display.email}}
+          div(class='row')
+            div(class='col-md-12')
+              div(ui-grid="vehicles",class="vehicleGrid")
+              div(ng-show='load')
+                div(class="progress", style="margin-top=-100px; margin-bottom: 0px;" )
+                  div(class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%")
+                    span="Loading user's vehicles..."

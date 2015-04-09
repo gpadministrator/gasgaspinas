@@ -1,4 +1,115 @@
 extends layout
 
 block content
-  div(ng-view) 
+  br
+  div(class="row", ng-controller="AppCtrl")
+    div(class="col-md-5")
+      div(class="panel panel-default")
+        div(class="panel-heading") User Registration
+        div(class="panel-body") 
+          canvas(id="myChart", width="450", height="250")
+    div(class="col-md-3")
+      div(class="panel panel-default")
+        div(class="panel-heading") User Age Group
+        div(class="panel-body") 
+          canvas(id="ageGroup", width="240", height="250")
+    div(class="col-md-4")
+      div(class="panel panel-default")
+        div(class="panel-heading") Top Stations
+        div(class="panel-body", style="height:283px"  )
+          ul(class="nav nav-pills nav-stacked")
+            li(role="presentation")
+              a(href="#") 1.  Shell Morato
+            li(role="presentation")
+              a(href="#") 2. Petron Bicutan
+            li(role="presentation")
+              a(href="#") 3. Shell
+            li(role="presentation")
+              a(href="#") 4. SeaOil Cainta
+            li(role="presentation")
+              a(href="#") 5. CleanFuel
+            li(role="presentation")
+              a(href="#") 6. CleanFuel
+      |<script>
+      |var options = {
+      |  scaleShowGridLines : true,
+      |  scaleGridLineColor : "rgba(0,0,0,.05)",
+      |  scaleGridLineWidth : 1,
+      |  scaleShowHorizontalLines: true,
+      |  scaleShowVerticalLines: true,
+      |  bezierCurve : true,
+      |  bezierCurveTension : 0.4,
+      |  pointDot : true,
+      |  pointDotRadius : 4,
+      |  pointDotStrokeWidth : 1,
+      |  pointHitDetectionRadius : 20,
+      |  datasetStroke : true,
+      |  datasetStrokeWidth : 2,
+      |  datasetFill : true,
+      |  legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+      |};
+      |    var data = {
+      |  labels: ["January", "February", "March", "April", "May", "June", "July"],
+      |  datasets: [
+      |      {
+      |          label: "User Registration",
+      |          fillColor: "rgba(220,220,220,0.2)",
+      |          strokeColor: "rgba(220,220,220,1)",
+      |          pointColor: "rgba(220,220,220,1)",
+      |          pointStrokeColor: "#fff",
+      |          pointHighlightFill: "#fff",
+      |          pointHighlightStroke: "rgba(220,220,220,1)",
+      |          data: [65, 59, 80, 81, 56, 55, 90]
+      |      }
+      |  ]
+      | };
+      | var canvas = document.getElementById("myChart");
+      | var ctx = canvas.getContext("2d");
+      | new Chart(ctx).Line(data, options);
+      | var dataAgeGroup = [
+      | {
+      |   value: 300,
+      |   color:"#E6F5F2",
+      |   highlight: "#015040",
+      |   label: "18-25"
+      | },
+      | {
+      |   value: 50,
+      |   color: "#B3E2D9",
+      |   highlight: "#015040",
+      |   label: "26-35"
+      | },
+      | {
+      |   value: 100,
+      |   color: "#80CFC0",
+      |   highlight: "#015040",
+      |   label: "36-45"
+      | },
+      | {
+      |   value: 30,
+      |   color: "#4EBCA6",
+      |   highlight: "#015040",
+      |   label: "46-55"
+      | },
+      | {
+      |   value: 12,
+      |   color: "#029F80",
+      |   highlight: "#015040",
+      |   label: "55-70"
+      | }
+      | ];
+      | var ageGroup = document.getElementById("ageGroup");
+      | var ctx2 = ageGroup.getContext("2d");
+      | var optionsAgeGroup = {
+      |   segmentShowStroke : true,
+      |   segmentStrokeColor : "#fff",
+      |   segmentStrokeWidth : 2,
+      |  percentageInnerCutout : 50, // This is 0 for Pie charts
+      | animationSteps : 100,
+      | animationEasing : "easeOutBounce",
+      | animateRotate : true,
+      | animateScale : false,
+      | legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+      |}
+      | var myDoughnutChart = new Chart(ctx2).Doughnut(dataAgeGroup,optionsAgeGroup); 
+      |</script>

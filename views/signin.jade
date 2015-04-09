@@ -1,0 +1,58 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/javascripts/angular-ui/build/angular-ui.css')
+    link(rel='stylesheet', href='/javascripts/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet', href='/javascripts/angular-ui/build/angular-ui.css')
+    link(rel='stylesheet', href='/javascripts/angular-ui-grid/ui-grid.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/javascripts/jquery/dist/jquery.js')
+    script(src='/javascripts/bootstrap/dist/js/bootstrap.js')
+    script(src='/javascripts/angular/angular.js')
+    script(src='/javascripts/angular-ui-grid/ui-grid.js')
+    script(src='/javascripts/angular-ui/build/angular-ui.js')
+    script(src='/javascripts/angular-route/angular-route.js')
+    script(src='/javascripts/bootstrapnav.js')
+    script(src='/javascripts/app.js')
+    script(src='/javascripts/controllers.js')
+    script(src="/javascripts/chartjs/Chart.js")
+    |<base href="/">
+  body(ng-app="gasgaspinas")
+    |<nav class="navbar navbar-default navbar-fixed-top">
+    |<div class='container-fluid' ng-controller='AppCtrl'>
+    div(class="navbar-header")
+        a(class="navbar-brand", href="/") Gasgas Pinas
+    |<div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+    ul(class="nav navbar-nav")
+        li
+            a(href="/signin") Sign in
+    |</div>
+    |</div>
+    |</nav>
+
+    br
+    br
+    br
+    div(class="row")
+      div(class="col-lg-offset-4 col-lg-4")
+        div(class="panel panel-default panel-transparent")
+          div(class="panel-body")
+            center
+              p
+                h3 Gasgas Pinas
+              br
+            form(action="/login", method="post")
+              div(class="form-group")
+                div(class="input-group input-group-xs")
+                  span(class='input-group-addon')
+                    span(class='glyphicon glyphicon-user')              
+                  input(type="text", name="username", class="form-control" id="inputUsername" placeholder="Enter username")
+              div(class="form-group")
+                div(class="input-group input-group-xs")
+                  span(class="input-group-addon")
+                    span(class="glyphicon glyphicon-lock")
+                  input(type="password", name="password", class="form-control" id="inputPassword" placeholder="Enter password")
+              button(type="submit", class="btn btn-default btn-block") Login
+          div(class="panel-footer")
+            center=" "

@@ -1,4 +1,6 @@
 var express = require('express');
+var passport = require('passport');
+var Admin = require('../models/admin');
 var router = express.Router();
 var mongoose = require('mongoose');
 
@@ -7,13 +9,72 @@ var VEHICLES = mongoose.model('vehicles');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+	if(req.session.passport.user !== undefined) {
+		res.render('index', { title: 'Express' });
+	}
+	else {
+		res.redirect('/signin');
+	}
+ 
+});
+
+
+
+/* Signin Page */
+router.get('/signin', function(req, res) {
+  res.render('signin');
 });
 
 router.get('/:name', function(req,res){
 	var name = req.params.name;
-	res.render(name);
+	if(name === 'logout') {
+		req.logout();
+    	res.redirect('/signin');
+	}
+	else if(req.session.passport.user !== undefined && name !== 'signin') {
+		res.render(name);
+	}
+	else {
+		res.redirect('/signin');
+	}
+
 });
+
+/*START ADMIN PAGE and API*/
+router.get('/register', function(req, res) {
+    res.render('register', { });
+});
+
+router.post('/register', function(req, res) {
+    Admin.register(new Admin({ username : req.body.username }), req.body.password, function(err, account) {
+        if (err) {
+            return res.render('register', { account : account });
+        }
+
+        passport.authenticate('local')(req, res, function () {
+        	res.render('register', {user: req.session.passport.user});
+            //res.redirect('/admin');
+        });
+    });
+});
+
+router.get('/login', function(req, res) {
+    res.redirect('/signin');
+});
+
+router.post('/login', passport.authenticate('local'), function(req, res) {
+    res.redirect('/');
+});
+
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
+router.get('/ping', function(req, res){
+    res.status(200).send("pong!");
+});
+/*END ADMIN PAGE and API*/
 
 var getUserVehicles = function(req,res,next) {
 	if(req.entry) {

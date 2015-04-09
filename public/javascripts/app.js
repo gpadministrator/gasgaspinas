@@ -1,22 +1,11 @@
 'use strict';
 
 angular.module('gasgaspinas', 
-    [ 'ngRoute',
+    [
+      'ui.bootstrap',
       'ui.grid',
-      'gasgaspinas.controllers'
+      'gasgaspinas.controllers',
+      'gasgaspinas.services'
       /*'gasgaspinas.filters', 'gasgaspinas.services', 'gasgaspinas.directives'*/]).
-  config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-    $routeProvider.
-      when('/', {
-        templateUrl: 'graphs',
-        controller: 'IndexCtrl'
-      }).
-      when('/users', {
-        templateUrl: 'users',
-        controller: 'UsersCtrl'
-      }).
-      otherwise({
-        redirectTo: '/'
-      });
-    $locationProvider.html5Mode(true);
+  config(['$locationProvider', function($locationProvider) {
   }]);

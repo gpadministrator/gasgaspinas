@@ -8,12 +8,6 @@ var crypto = require('crypto');
 var USERS = mongoose.model('users');
 var VEHICLES = mongoose.model('vehicles');
 
-router.get('/generate', function(req, res) {
-	var info = generateUsers();
-	console.log(JSON.stringify(info));
-    res.send(info);
-});
-
 var addUser = function(req,res,next) {
 
 	console.log(JSON.stringify(req.body));
@@ -22,11 +16,11 @@ var addUser = function(req,res,next) {
 	reqEntry.date_modified = dateToUnixEpoch(new Date(reqEntry._id.getTimestamp()));
 	reqEntry.auth.password = toMD5(reqEntry.auth.password);
 	reqEntry.vehicles = [];
-	if(!reqEntry.info.dp or reqEntry.info.dp == "") {
+	if(!reqEntry.info.dp || reqEntry.info.dp == "") {
 		if(reqEntry.info.gender == "Male") {
 			reqEntry.info.dp = "https://s3-ap-southeast-1.amazonaws.com/gasgaspinas/unknown-male.jpg";
 		}
-		else(reqEntry.info.gender == "Female") {
+		else if(reqEntry.info.gender == "Female") {
 			reqEntry.info.dp = "https://s3-ap-southeast-1.amazonaws.com/gasgaspinas/unknown-female.jpg";
 		}
 	}
@@ -49,62 +43,6 @@ var sendResponse = function(req,res,next) {
 	}
 };
 
-router.post('/', [addUser, sendResponse]);
-
-
-router.put('/:id', [function(req,res,next){
-	console.log(req.body);
-	USERS.update({_id: new mongoose.Types.ObjectId(req.params.id)}, {$set: req.body},
-		function(err, numbersAffected, raw){
-			req.err = err;
-			req.entry = raw;
-			next();
-		});
-},sendResponse]);
-
-router.delete('/:id', [function(req, res, next) {
-	USERS.remove({_id: new mongoose.Types.ObjectId(req.params.id)}, 
-		function(err) {
-			req.err = err;
-			req.entry = null;
-			next();
-		}
-	);
-},sendResponse]);
-
-router.post('/vehicles/:id', [function(req,res,next){ 
-
-
-	var vehicleInfo = new VEHICLES(req.body);
-	vehicleInfo._id = new mongoose.Types.ObjectId;
-	vehicleInfo.user_id = new mongoose.Types.ObjectId(req.params.id);
-	vehicleInfo.date_modified = Date.now ();
-
-	vehicleInfo.save(function(err, entry, numbersAffected){
-		req.err = err;
-		req.entry = entry;
-		next();
-	});
-
-},sendResponse]);
-router.get('/vehicles/:id', [function(req,res,next){
-
-	var option = {};
-	option.user_id = new mongoose.Types.ObjectId(req.params.id);
-
-	var vehicle_id = req.query.vehicle_id;
-	if(req.query.vehicle_id) {
-		option._id = new mongoose.Types.ObjectId(req.query.vehicle_id);
-	}
-
-	console.log(JSON.stringify(option));
-	VEHICLES.find(option, function(err, doc){
-		req.err = err;
-		req.entry = doc;
-		next();
-	});
-
-},sendResponse]);
 
 router.put('/vehicles/:id', [function(req,res,next){
 
