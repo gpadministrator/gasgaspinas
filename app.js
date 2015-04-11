@@ -24,6 +24,12 @@ var vehicle_logs = require('./routes/vehicle_logs');
 var mongoose = require('mongoose');
 var app = express();
 
+var PROTOCOL = 'https://';
+var AWSURL = 'amazonaws.com';
+var REGION = 'ap-southeast-1';
+var PRODUCT = { s3: 's3'};
+var BUCKET = 'gasgaspinas';
+var S3URL = PROTOCOL+PRODUCT.s3+'-'+REGION+'.'+AWSURL+'/';
 
 var connect = function() {
     var options = {server: {socketOptions: {keepAlive:1}}};
@@ -60,14 +66,10 @@ AWS S3 CONFIG
 AWS.config.update({accessKeyId: 'AKIAIMLEGGCG5WIBWTOQ', secretAccessKey: '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'});
 
 var s3bucket = new AWS.S3();
-AWS.config.update({region: 'ap-southeast-1'});
+AWS.config.update({region: REGION});
 app.use(multer({ // https://github.com/expressjs/multer
   dest: './public/', 
   limits : { fileSize:100000 },
-  rename: function (fieldname, filename) {
-    console.log(filename);
-    return filename.replace(/\W+/g, '-').toLowerCase();
-  },
   onFileUploadStart: function () {
     console.log("upload");
   },
@@ -76,19 +78,25 @@ app.use(multer({ // https://github.com/expressjs/multer
   },
   onFileUploadData: function (file, data, req, res) {
     console.log("upload");
-
+    console.log(JSON.stringify(file));
     // file : { fieldname, originalname, name, encoding, mimetype, path, extension, size, truncated, buffer }
     var params = {
-      Bucket: 'gasgaspinas',
+      Bucket: BUCKET,
+      ACL: 'public-read',
       Key: file.name,
+      ContentType: file.mimetype,
       Body: data
     };
 
     s3bucket.putObject(params, function (perr, pres) {
       if (perr) {
-        console.log("Error uploading data: ", perr);
+        res.send({msg: false, data: perr});
       } else {
-        res.send("Successfully uploaded data to myBucket/myKey");
+        console.log(JSON.stringify(pres));
+        res.send ({
+          msg: true, 
+          data: {url: (S3URL+BUCKET+'/'+file.name)}
+        });
       }
     });
   }
