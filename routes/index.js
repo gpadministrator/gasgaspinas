@@ -81,7 +81,6 @@ var getUserVehicles = function(req,res,next) {
 		console.log("get vehicles");
 		VEHICLES.find({user_id: req.entry._id}, function(err, doc){
 			console.log(JSON.stringify(doc));
-
 			req.err = err;
 			console.log("VEHICLES: "+doc);
 			req.vehicles = doc;
@@ -97,10 +96,14 @@ var getUserVehicles = function(req,res,next) {
 
 var isUserExist = function(req,res,next) {
     var user = req.body.auth;
-    console.log(JSON.stringify(user));
-    if(!user.type) {
+    console.log(JSON.stringify(req.body));
+    if(!Object.prototype.hasOwnProperty.call(user,'type')) {
     	user.password = toMD5(user.password);
 		USERS.findOne({"auth.username": user.username, "auth.password": user.password}, function(err, doc){
+			console.log(doc);
+			if(doc === null) {
+				res.send({msg: false, err: "Invalid username or password."})
+			}
 			req.err = err;
 			req.entry = doc;
 			req.addUser = false;
