@@ -80,17 +80,26 @@ app.use(multer({ // https://github.com/expressjs/multer
   onFileUploadData: function (file, data, req, res) {
     console.log("upload");
     console.log(JSON.stringify(file));
+    console.log("checksum: "+req.body.checksum);
+
     // file : { fieldname, originalname, name, encoding, mimetype, path, extension, size, truncated, buffer }
     var params = {
       Bucket: BUCKET,
       ACL: 'public-read',
       Key: file.name,
       ContentType: file.mimetype,
+      ContentMD5: req.body.checksum,
       Body: data
     };
 
     s3bucket.upload(params, function (perr, pres) {
-      if (perr) {
+      console.log(JSON.stringify(pres));
+      if( -1 !== pres.ETag.search(req.body.checksum)) {
+        console.log("ETAG: "+pres.ETag);
+        console.log("checksum: "+req.body.checksum);
+        res.send({msg: false, data: 'check sum did not match'});
+      }
+      else if (perr) {
         res.send({msg: false, data: perr});
       } else {
         console.log(JSON.stringify(pres));
