@@ -98,10 +98,18 @@ app.use(multer({ // https://github.com/expressjs/multer
       if( -1 == pres.ETag.search(req.body.checksum.toLowerCase())) {
         console.log("ETAG: "+pres.ETag);
         console.log("checksum: "+req.body.checksum);
-        res.send({msg: false, data: 'check sum did not match'});
+        s3bucket.deleteObject({Bucket: BUCKET, Key: file.name}, function(err, data) { 
+          if(err) {
+            res.send({msg: false, err: err});
+          }
+          else
+            res.send({msg: false, err: 'checksum did not matched.'});;  
+        })
+
+        
       }
       else if (perr) {
-        res.send({msg: false, data: perr});
+        res.send({msg: false, err: perr});
       } else {
         console.log(JSON.stringify(pres));
         res.send ({

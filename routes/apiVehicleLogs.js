@@ -54,4 +54,45 @@ router.post('/upload', function(req, res){
 
 });
 
+router.get('/vlogs/:id', function(req,res){
+  var options = [
+    {
+      $match: {user_id: new mongoose.Types.ObjectId(req.params.id) }
+    },
+    {
+      $group:
+      {
+        _id: {vehicle_id: "$vehicle_id"},
+        logs:
+        {
+          $push:
+          {
+            station_id: "$station_id",
+            fuel_consumed: "$fuel_consumed",
+            distance_traveled: "$distance_traveled",
+            liters: "$liters",
+            amount: "$amount",
+            fuel_savings: "$fuel_savings",
+            fuel_consumed: "$fuel_consumed",
+            _id: "$_id",
+            date_modified: "$date_modified",
+          }
+        }
+      }
+    }
+  ];
+
+  VLOGS.aggregate(options,
+
+  	function(error, doc){
+  		if(error) {
+  			res.send({msg: false, err: error});
+  		}
+  		else {
+  			res.send({msg: true, data: doc});
+  		}
+  	}
+  )
+});
+
 module.exports = router;
