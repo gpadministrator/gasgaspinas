@@ -94,7 +94,8 @@ app.use(multer({ // https://github.com/expressjs/multer
 
     s3bucket.upload(params, function (perr, pres) {
       console.log(JSON.stringify(pres));
-      if( -1 !== pres.ETag.search(req.body.checksum)) {
+      console.log(pres.ETag.search(req.body.checksum))
+      if( -1 == pres.ETag.search(req.body.checksum.toLowerCase())) {
         console.log("ETAG: "+pres.ETag);
         console.log("checksum: "+req.body.checksum);
         res.send({msg: false, data: 'check sum did not match'});
