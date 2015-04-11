@@ -96,7 +96,7 @@ app.use(multer({ // https://github.com/expressjs/multer
         console.log(JSON.stringify(pres));
         res.send ({
           msg: true, 
-          data: data.data
+          data: pres.data
         });
       }
     });
