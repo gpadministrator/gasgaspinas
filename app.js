@@ -89,14 +89,14 @@ app.use(multer({ // https://github.com/expressjs/multer
       Body: data
     };
 
-    s3bucket.putObject(params, function (perr, pres) {
+    s3bucket.upload(params, function (perr, pres) {
       if (perr) {
         res.send({msg: false, data: perr});
       } else {
         console.log(JSON.stringify(pres));
         res.send ({
           msg: true, 
-          data: {url: (S3URL+BUCKET+'/'+file.name)}
+          data: data.data
         });
       }
     });
