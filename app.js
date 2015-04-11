@@ -70,6 +70,7 @@ AWS.config.update({region: REGION});
 app.use(multer({ // https://github.com/expressjs/multer
   dest: './public/', 
   limits : { fileSize:100000 },
+  inMemory: true,
   onFileUploadStart: function () {
     console.log("upload");
   },
